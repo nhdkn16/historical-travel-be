@@ -1,16 +1,10 @@
 package com.nhdkn16.historicaltravel.entity;
 
-import java.math.BigDecimal;
-import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
-
-import org.hibernate.annotations.CreationTimestamp;
-
-import com.nhdkn16.historicaltravel.enums.TourStatus;
-
 import jakarta.persistence.*;
 import lombok.*;
+
+import java.math.BigDecimal;
+import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "tours")
@@ -18,10 +12,10 @@ import lombok.*;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
+@Builder
 public class Tour {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "tour_id")
     private Long tourId;
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -34,24 +28,24 @@ public class Tour {
     @Column(columnDefinition = "TEXT")
     private String description;
 
-    @Column(name = "price_per_person", nullable = false, precision = 10, scale = 2)
+    @Column(nullable = false, precision = 10, scale = 2)
     private BigDecimal pricePerPerson;
 
-    @Column(name = "max_participants")
     private Integer maxParticipants;
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
-    private TourStatus status = TourStatus.ACTIVE;
+    private Status status = Status.ACTIVE;
 
-    @CreationTimestamp
-    @Column(name = "created_at", updatable = false)
     private LocalDateTime createdAt;
 
-    // Relationships
-    @OneToMany(mappedBy = "tour", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<TourSchedule> schedules = new ArrayList<>();
+    @PrePersist
+    public void onCreate() {
+        createdAt = LocalDateTime.now();
+    }
 
-    @OneToMany(mappedBy = "tour", cascade = CascadeType.ALL)
-    private List<Booking> bookings = new ArrayList<>();
+    public enum Status {
+        ACTIVE,
+        INACTIVE
+    }
 }

@@ -1,33 +1,25 @@
 package com.nhdkn16.historicaltravel.service;
 
 import java.util.List;
-
-import org.springframework.stereotype.Service;
+import java.util.Optional;
 
 import com.nhdkn16.historicaltravel.entity.Comment;
-import com.nhdkn16.historicaltravel.repository.CommentRepository;
 
-@Service
-public class CommentService {
-    private final CommentRepository commentRepository;
+public interface CommentService {
 
-    public CommentService(CommentRepository commentRepository) {
-        this.commentRepository = commentRepository;
-    }
+    Comment createComment(Comment comment);
 
-    public Comment handleAddComment(Comment comment) {
-        return this.commentRepository.save(comment);
-    }
+    Comment updateComment(Long commentId, Comment comment);
 
-    public List<Comment> handleGetAllCommentsByPostId(long id) {
-        return this.commentRepository.findAllCommentsByPostId(id);
-    }
+    void deleteComment(Long commentId);
 
-    public List<Comment> handleGetAllCommentsByUserId(long id) {
-        return this.commentRepository.findAllCommentsByUserId(id);
-    }
+    Optional<Comment> getCommentById(Long commentId);
 
-    public void handleDeleteCommentById(long id) {
-        this.commentRepository.deleteById(id);
-    }
+    List<Comment> getCommentsByPost(Long postId);
+
+    List<Comment> getCommentsByLocation(Long locationId);
+
+    List<Comment> getCommentsByUser(Long userId);
+
+    List<Comment> getReplies(Long parentCommentId);
 }

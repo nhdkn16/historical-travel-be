@@ -1,33 +1,23 @@
 package com.nhdkn16.historicaltravel.service;
 
 import java.util.List;
-
-import org.springframework.stereotype.Service;
+import java.util.Optional;
 
 import com.nhdkn16.historicaltravel.entity.Review;
-import com.nhdkn16.historicaltravel.repository.ReviewRepository;
 
-@Service
-public class ReviewService {
-    private final ReviewRepository reviewRepository;
+public interface ReviewService {
 
-    public ReviewService(ReviewRepository reviewRepository) {
-        this.reviewRepository = reviewRepository;
-    }
+    Review createReview(Review review);
 
-    public Review handleAddReview(Review review) {
-        return this.reviewRepository.save(review);
-    }
+    Review updateReview(Long id, Review review);
 
-    public List<Review> handleGetAllReviewsByUserId(long id) {
-        return this.reviewRepository.findAllByUserId(id);
-    }
+    void deleteReview(Long id);
 
-    public List<Review> handleGetAllReviewsByLocationId(long id) {
-        return this.reviewRepository.findAllByLocationId(id);
-    }
+    Optional<Review> getReviewById(Long id);
 
-    public void handleDeleteReviewById(long id) {
-        this.reviewRepository.deleteById(id);
-    }
+    List<Review> getReviewsByLocation(Long locationId);
+
+    List<Review> getReviewsByUser(Long userId);
+
+    Optional<Review> getUserReviewForLocation(Long userId, Long locationId);
 }

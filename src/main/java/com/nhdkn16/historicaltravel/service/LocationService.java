@@ -3,32 +3,25 @@ package com.nhdkn16.historicaltravel.service;
 import java.util.List;
 import java.util.Optional;
 
-import org.springframework.stereotype.Service;
-
 import com.nhdkn16.historicaltravel.entity.Location;
-import com.nhdkn16.historicaltravel.repository.LocationRepository;
 
-@Service
-public class LocationService {
-    private final LocationRepository locationRepository;
+public interface LocationService {
 
-    public LocationService(LocationRepository locationRepository) {
-        this.locationRepository = locationRepository;
-    }
+    Location createLocation(Location location);
 
-    public Location handleAddLocation(Location location) {
-        return this.locationRepository.save(location);
-    }
+    Location updateLocation(Long id, Location location);
 
-    public Optional<Location> handleGetLocationById(long id) {
-        return this.locationRepository.findById(id);
-    }
+    void deleteLocation(Long id);
 
-    public List<Location> handleGetAllLocations() {
-        return this.locationRepository.findAll();
-    }
- 
-    public void handleDeleteLocationById(long id) {
-        this.locationRepository.deleteById(id);
-    }
+    Optional<Location> getLocationById(Long id);
+
+    List<Location> getAllLocations();
+
+    List<Location> searchByName(String keyword);
+
+    List<Location> getByProvince(String province);
+
+    List<Location> getByType(Location.LocationType type);
+
+    List<Location> getByStatus(Location.Status status);
 }

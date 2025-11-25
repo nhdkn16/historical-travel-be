@@ -1,20 +1,10 @@
 package com.nhdkn16.historicaltravel.entity;
 
+import jakarta.persistence.*;
+import lombok.*;
+
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
-
-import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.UpdateTimestamp;
-
-import com.nhdkn16.historicaltravel.enums.LocationStatus;
-import com.nhdkn16.historicaltravel.enums.LocationType;
-
-import jakarta.persistence.*;
-import jakarta.persistence.CascadeType;
-import jakarta.persistence.Table;
-import lombok.*;
 
 @Entity
 @Table(name = "locations")
@@ -22,6 +12,7 @@ import lombok.*;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
+@Builder
 public class Location {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -57,28 +48,32 @@ public class Location {
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
-    private LocationStatus status = LocationStatus.PENDING;
+    private Status status = Status.PENDING;
 
-    @CreationTimestamp
-    @Column(name = "created_at", updatable = false)
     private LocalDateTime createdAt;
-
-    @UpdateTimestamp
-    @Column(name = "updated_at")
     private LocalDateTime updatedAt;
 
-    @OneToMany(mappedBy = "location", cascade = CascadeType.ALL)
-    private List<Review> reviews = new ArrayList<>();
+    @PrePersist
+    public void onCreate() {
+        createdAt = LocalDateTime.now();
+        updatedAt = LocalDateTime.now();
+    }
 
-    @OneToMany(mappedBy = "location", cascade = CascadeType.ALL)
-    private List<Favorite> favorites = new ArrayList<>();
+    @PreUpdate
+    public void onUpdate() {
+        updatedAt = LocalDateTime.now();
+    }
 
-    @OneToMany(mappedBy = "location", cascade = CascadeType.ALL)
-    private List<Post> posts = new ArrayList<>();
+    public enum LocationType {
+        HISTORICAL_SITE,
+        MUSEUM,
+        RELIGIOUS,
+        LANDMARK
+    }
 
-    @OneToMany(mappedBy = "location", cascade = CascadeType.ALL)
-    private List<Comment> comments = new ArrayList<>();
-
-    @OneToMany(mappedBy = "location", cascade = CascadeType.ALL)
-    private List<Image> images = new ArrayList<>();
+    public enum Status {
+        ACTIVE,
+        INACTIVE,
+        PENDING
+    }
 }

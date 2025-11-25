@@ -1,29 +1,17 @@
 package com.nhdkn16.historicaltravel.service;
 
 import java.util.List;
-
-import org.springframework.stereotype.Service;
+import java.util.Optional;
 
 import com.nhdkn16.historicaltravel.entity.Favorite;
-import com.nhdkn16.historicaltravel.repository.FavoriteRepository;
 
-@Service
-public class FavoriteService {
-    private final FavoriteRepository favoriteRepository;
+public interface FavoriteService {
 
-    public FavoriteService(FavoriteRepository favoriteRepository) {
-        this.favoriteRepository = favoriteRepository;
-    }
+    Favorite addFavorite(Long userId, Long locationId);
 
-    public Favorite handleAddFavorite(Favorite favorite) {
-        return this.favoriteRepository.save(favorite);
-    }
+    void removeFavorite(Long userId, Long locationId);
 
-    public List<Favorite> handGetAllFavorites(long id) {
-        return this.favoriteRepository.findFavoriteByUserId(id);
-    }
+    List<Favorite> getFavoritesByUser(Long userId);
 
-    public void handleDeleteFavoritesById(long id) {
-        this.favoriteRepository.deleteById(id);
-    }
+    Optional<Favorite> getUserFavoriteForLocation(Long userId, Long locationId);
 }

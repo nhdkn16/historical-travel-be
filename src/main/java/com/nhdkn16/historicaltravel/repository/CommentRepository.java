@@ -1,12 +1,21 @@
 package com.nhdkn16.historicaltravel.repository;
 
-import java.util.List;
-
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import com.nhdkn16.historicaltravel.entity.Comment;
+import com.nhdkn16.historicaltravel.entity.Location;
+import com.nhdkn16.historicaltravel.entity.Post;
+import com.nhdkn16.historicaltravel.entity.User;
+
+import java.util.List;
 
 public interface CommentRepository extends JpaRepository<Comment, Long> {
-    public List<Comment> findAllCommentsByPostId(long postId);
-    public List<Comment> findAllCommentsByUserId(long userId);
+
+    List<Comment> findByPost(Post post);
+
+    List<Comment> findByLocation(Location location);
+
+    List<Comment> findByUser(User user);
+
+    List<Comment> findByParentComment(Comment parentComment);
 }

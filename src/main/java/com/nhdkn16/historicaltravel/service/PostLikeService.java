@@ -1,29 +1,19 @@
 package com.nhdkn16.historicaltravel.service;
 
 import java.util.List;
-
-import org.springframework.stereotype.Service;
+import java.util.Optional;
 
 import com.nhdkn16.historicaltravel.entity.PostLike;
-import com.nhdkn16.historicaltravel.repository.PostLikeRepository;
 
-@Service
-public class PostLikeService {
-    private final PostLikeRepository postLikeRepository;
+public interface PostLikeService {
 
-    public PostLikeService(PostLikeRepository postLikeRepository) {
-        this.postLikeRepository = postLikeRepository;
-    }
+    PostLike likePost(Long userId, Long postId);
 
-    public PostLike handleAddPostLike(PostLike postLike) {
-        return this.postLikeRepository.save(postLike);
-    }
+    void unlikePost(Long userId, Long postId);
 
-    public List<PostLike> handleGetAllPostLike(long id) {
-        return this.postLikeRepository.findAllPostLikeByPostId(id);
-    }
+    List<PostLike> getLikesByPost(Long postId);
 
-    public void handleDeletePostLikeById(long id) {
-        this.postLikeRepository.deleteById(id);
-    } 
+    Optional<PostLike> getUserLikeForPost(Long userId, Long postId);
+
+    long countLikes(Long postId);
 }

@@ -1,33 +1,25 @@
 package com.nhdkn16.historicaltravel.service;
 
 import java.util.List;
-
-import org.springframework.stereotype.Service;
+import java.util.Optional;
 
 import com.nhdkn16.historicaltravel.entity.Post;
-import com.nhdkn16.historicaltravel.repository.PostRepository;
 
-@Service
-public class PostService {
-    private final PostRepository postRepository;
+public interface PostService {
 
-    public PostService(PostRepository postRepository) {
-        this.postRepository = postRepository;
-    }
+    Post createPost(Post post);
 
-    public Post handleAddPost(Post post) {
-        return this.postRepository.save(post);
-    }
+    Post updatePost(Long postId, Post updatedPost);
 
-    public List<Post> handleGetAllPostByOrderByCreateAtDesc() {
-        return this.postRepository.findAllByOrderByCreatedAtDesc();
-    }
+    void deletePost(Long postId);
 
-    public void handleDeletePostById(long id) {
-        this.postRepository.deleteById(id);
-    }
+    Optional<Post> getPostById(Long postId);
 
-    public void handleDeletePostByIdAndUserId(long postId, long userId) {
-        this.postRepository.deletePostByIdAndUserId(postId, userId);
-    }
+    List<Post> getAllPosts();
+
+    List<Post> getPostsByUser(Long userId);
+
+    List<Post> getPostsByLocation(Long locationId);
+
+    Post increaseViewCount(Long postId);
 }

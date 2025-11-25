@@ -1,20 +1,22 @@
 package com.nhdkn16.historicaltravel.entity;
 
-import java.time.LocalDateTime;
-
-import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.UpdateTimestamp;
-
 import jakarta.persistence.*;
-import jakarta.validation.constraints.*;
 import lombok.*;
 
+import java.time.LocalDateTime;
+
 @Entity
-@Table(name = "reviews", uniqueConstraints = @UniqueConstraint(columnNames = {"user_id", "location_id"}))
+@Table(
+    name = "reviews",
+    uniqueConstraints = {
+            @UniqueConstraint(columnNames = {"user_id", "location_id"})
+    }
+)
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
+@Builder
 public class Review {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -29,17 +31,23 @@ public class Review {
     private Location location;
 
     @Column(nullable = false)
-    @Min(1) @Max(5)
-    private Integer rating;
+    private Integer rating; // 1-5
 
     @Column(columnDefinition = "TEXT")
     private String comment;
 
-    @CreationTimestamp
-    @Column(name = "created_at", updatable = false)
     private LocalDateTime createdAt;
 
-    @UpdateTimestamp
-    @Column(name = "updated_at")
     private LocalDateTime updatedAt;
+
+    @PrePersist
+    public void onCreate() {
+        createdAt = LocalDateTime.now();
+        updatedAt = LocalDateTime.now();
+    }
+
+    @PreUpdate
+    public void onUpdate() {
+        updatedAt = LocalDateTime.now();
+    }
 }

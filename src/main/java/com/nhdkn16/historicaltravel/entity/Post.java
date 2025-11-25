@@ -1,13 +1,6 @@
 package com.nhdkn16.historicaltravel.entity;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
-
-import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.UpdateTimestamp;
-
-import com.nhdkn16.historicaltravel.enums.PostStatus;
 
 import jakarta.persistence.*;
 import lombok.*;
@@ -18,6 +11,7 @@ import lombok.*;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
+@Builder
 public class Post {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -34,30 +28,31 @@ public class Post {
     @Column(nullable = false, length = 255)
     private String title;
 
-    @Column(columnDefinition = "TEXT", nullable = false)
+    @Column(nullable = false, columnDefinition = "TEXT")
     private String content;
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
-    private PostStatus status = PostStatus.DRAFT;
+    private Status status = Status.DRAFT;
 
-    @Column(name = "view_count")
+    @Column(columnDefinition = "INT DEFAULT 0")
     private Integer viewCount = 0;
 
-    @CreationTimestamp
-    @Column(name = "created_at", updatable = false)
     private LocalDateTime createdAt;
-
-    @UpdateTimestamp
-    @Column(name = "updated_at")
     private LocalDateTime updatedAt;
 
-    @OneToMany(mappedBy = "post", cascade = CascadeType.ALL)
-    private List<Comment> comments = new ArrayList<>();
+    @PrePersist
+    public void onCreate() {
+        createdAt = LocalDateTime.now();
+        updatedAt = LocalDateTime.now();
+    }
 
-    @OneToMany(mappedBy = "post", cascade = CascadeType.ALL)
-    private List<PostLike> likes = new ArrayList<>();
+    @PreUpdate
+    public void onUpdate() {
+        updatedAt = LocalDateTime.now();
+    }
 
-    @OneToMany(mappedBy = "post", cascade = CascadeType.ALL)
-    private List<Image> images = new ArrayList<>();
+    public enum Status {
+        DRAFT, PUBLISHED, ARCHIVED
+    }
 }

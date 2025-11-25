@@ -1,18 +1,22 @@
 package com.nhdkn16.historicaltravel.entity;
 
-import java.time.LocalDateTime;
-
-import org.hibernate.annotations.CreationTimestamp;
-
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.time.LocalDateTime;
+
 @Entity
-@Table(name = "favorites", uniqueConstraints = @UniqueConstraint(columnNames = {"user_id", "location_id"}))
+@Table(
+    name = "favorites",
+    uniqueConstraints = {
+            @UniqueConstraint(columnNames = {"user_id", "location_id"})
+    }
+)
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
+@Builder
 public class Favorite {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -26,7 +30,10 @@ public class Favorite {
     @JoinColumn(name = "location_id", nullable = false)
     private Location location;
 
-    @CreationTimestamp
-    @Column(name = "created_at", updatable = false)
     private LocalDateTime createdAt;
+
+    @PrePersist
+    public void onCreate() {
+        createdAt = LocalDateTime.now();
+    }
 }
