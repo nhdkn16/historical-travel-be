@@ -1,29 +1,19 @@
 package com.nhdkn16.historicaltravel.service;
 
 import java.util.List;
-
-import org.springframework.stereotype.Service;
+import java.util.Optional;
 
 import com.nhdkn16.historicaltravel.entity.Notification;
-import com.nhdkn16.historicaltravel.repository.NotificationRepository;
 
-@Service
-public class NotificationService {
-    private final NotificationRepository notificationRepository;
+public interface NotificationService {
 
-    public NotificationService(NotificationRepository notificationRepository) {
-        this.notificationRepository = notificationRepository;
-    }
+    Notification createNotification(Notification notification);
 
-    public Notification handleAddNotification(Notification notification) {
-        return this.notificationRepository.save(notification);
-    }
+    void markAsRead(Long notificationId);
 
-    public List<Notification> handleGetAllNotificationsByUserId(long id) {
-        return this.notificationRepository.findAllNotificationsByUserId(id);
-    }
+    Optional<Notification> getNotificationById(Long notificationId);
 
-    public void handleDeleteNotificationById(long id) {
-        this.notificationRepository.deleteById(id);
-    }
+    List<Notification> getNotificationsForUser(Long userId);
+
+    List<Notification> getUnreadNotificationsForUser(Long userId);
 }

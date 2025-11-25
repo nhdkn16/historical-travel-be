@@ -1,29 +1,18 @@
 package com.nhdkn16.historicaltravel.service;
 
 import java.util.List;
-
-import org.springframework.stereotype.Service;
+import java.util.Optional;
 
 import com.nhdkn16.historicaltravel.entity.Image;
-import com.nhdkn16.historicaltravel.repository.ImageRepository;
+import com.nhdkn16.historicaltravel.entity.Image.TargetType;
 
-@Service
-public class ImageService {
-    private final ImageRepository imageRepository;
+public interface ImageService {
 
-    public ImageService(ImageRepository imageRepository) {
-        this.imageRepository = imageRepository;
-    }
+    Image uploadImage(Image image);
 
-    public Image handleAddImage(Image image) {
-        return this.imageRepository.save(image);
-    }
+    void deleteImage(Long imageId);
 
-    public List<Image> handleGetAllImage(String targetType, long targetId) {
-        return this.imageRepository.findAllImagesByTargetTypeAndTargetId(targetType, targetId);
-    }
+    Optional<Image> getImageById(Long imageId);
 
-    public void handleDeleteImageById(long id) {
-        this.imageRepository.deleteById(id);
-    }
+    List<Image> getImagesByTarget(TargetType targetType, Long targetId);
 }

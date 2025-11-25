@@ -1,37 +1,23 @@
 package com.nhdkn16.historicaltravel.service;
 
 import java.util.List;
-
-import org.springframework.stereotype.Service;
+import java.util.Optional;
 
 import com.nhdkn16.historicaltravel.entity.User;
-import com.nhdkn16.historicaltravel.repository.UserRepository;
 
-@Service
-public class UserService {
-    private final UserRepository userRepository;
+public interface UserService {
 
-    public UserService(UserRepository userRepository) {
-        this.userRepository = userRepository;
-    }
+    User createUser(User user);
 
-    public User handleAddUser(User user) {
-        return this.userRepository.save(user);
-    }
+    User updateUser(Long id, User user);
 
-    public List<User> handleGetAllUsers() {
-        return this.userRepository.findAll();
-    }
+    void deleteUser(Long id);
 
-    public User handleGetUserById(long id) {
-        return this.userRepository.findUserById(id);
-    }
+    Optional<User> getUserById(Long id);
 
-    public User handleGetUserByEmail(String email) {
-        return this.userRepository.findUserByEmail(email);
-    }
+    Optional<User> getUserByEmail(String email);
 
-    public void handleDeleteUserById(long id) {
-        this.userRepository.deleteById(id);
-    }
+    Optional<User> getUserByUsername(String username);
+
+    List<User> getAllUsers();
 }
