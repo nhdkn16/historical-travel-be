@@ -125,7 +125,7 @@ body{
     opacity: 0;
     animation:showcontent 1s ease-in-out 0.3s 1 forwards
 }
-.item button{
+.item a{
     padding:10px 20px;
     border:none;
     opacity: 0;

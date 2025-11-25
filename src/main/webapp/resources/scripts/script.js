@@ -6,7 +6,7 @@ document.addEventListener('DOMContentLoaded', function() {
     // Cập nhật navigation bar dựa trên trạng thái đăng nhập
 function updateNavigation() {
     const nav = document.querySelector('.nav-menu') || document.querySelector('.menu');
-    const loginButtons = nav?.querySelectorAll('a[href*="login"]');
+    const loginButtons = nav?.querySelectorAll('a[href*="/login"]');
     
     if (!Auth.isLoggedIn()) {
         // Chưa đăng nhập - giữ nguyên
@@ -25,7 +25,7 @@ function updateNavigation() {
         // Tạo menu Thống kê
         const statsLi = document.createElement('li');
         statsLi.id = 'adminStatsMenu';
-        statsLi.innerHTML = '<a href="./src/Admin/admin.html" style="color: #ff7043; font-weight: bold;">📊 Thống kê</a>';
+        statsLi.innerHTML = '<a href="/admin" style="color: #ff7043; font-weight: bold;">📊 Thống kê</a>';
         
         // Thêm vào menu (trước nút đăng nhập/đăng ký)
         if (nav) {
