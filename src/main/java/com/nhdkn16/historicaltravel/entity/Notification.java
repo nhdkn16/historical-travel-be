@@ -1,14 +1,9 @@
 package com.nhdkn16.historicaltravel.entity;
 
-import java.time.LocalDateTime;
-
-import org.hibernate.annotations.CreationTimestamp;
-
-import com.nhdkn16.historicaltravel.enums.NotificationType;
-import com.nhdkn16.historicaltravel.enums.NotificationTargetType;
-
 import jakarta.persistence.*;
 import lombok.*;
+
+import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "notifications")
@@ -16,6 +11,7 @@ import lombok.*;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
+@Builder
 public class Notification {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -31,22 +27,39 @@ public class Notification {
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
-    private NotificationType type;
+    private Type type;
 
     @Enumerated(EnumType.STRING)
-    @Column(name = "target_type", nullable = false)
-    private NotificationTargetType targetType;
+    @Column(nullable = false)
+    private TargetType targetType;
 
-    @Column(name = "target_id", nullable = false)
+    @Column(nullable = false)
     private Long targetId;
 
     @Column(length = 500)
     private String message;
 
-    @Column(name = "is_read")
+    @Column(nullable = false)
     private Boolean isRead = false;
 
-    @CreationTimestamp
-    @Column(name = "created_at", updatable = false)
     private LocalDateTime createdAt;
+
+    @PrePersist
+    public void onCreate() {
+        createdAt = LocalDateTime.now();
+    }
+
+    public enum Type {
+        NEW_COMMENT,
+        NEW_LIKE,
+        NEW_REVIEW,
+        SYSTEM
+    }
+
+    public enum TargetType {
+        POST,
+        LOCATION,
+        REVIEW,
+        SYSTEM
+    }
 }
