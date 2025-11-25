@@ -123,7 +123,7 @@ const Auth = {
   },
 
   // Yêu cầu đăng nhập
-  requireLogin(redirectUrl = '../Register/login.html') {
+  requireLogin(redirectUrl = '/login') {
     if (!this.isLoggedIn()) {
       const currentPath = window.location.pathname;
       window.location.href = redirectUrl + '?return=' + encodeURIComponent(currentPath);
@@ -136,13 +136,13 @@ const Auth = {
   requireAdmin() {
     if (!this.isLoggedIn()) {
       alert('⛔ Bạn cần đăng nhập để truy cập trang này!');
-      window.location.href = '../Register/login.html';
+      window.location.href = '/login';
       return false;
     }
     
     if (!this.isAdmin()) {
       alert('⛔ Bạn không có quyền truy cập trang này! Chỉ dành cho Admin.');
-      window.location.href = '../index.html';
+      window.location.href = '/';
       return false;
     }
     
