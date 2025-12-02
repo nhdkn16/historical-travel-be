@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Optional;
 
 import com.nhdkn16.historicaltravel.entity.Tour;
+import com.nhdkn16.historicaltravel.entity.TourSchedule;
 
 public interface TourService {
 
@@ -20,4 +21,6 @@ public interface TourService {
     List<Tour> getToursByLocation(Long locationId);
 
     List<Tour> getActiveTours();
+    
+    List<TourSchedule> getSchedulesByTour(Tour tour);
 }

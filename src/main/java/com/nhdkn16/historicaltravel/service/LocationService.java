@@ -24,4 +24,6 @@ public interface LocationService {
     List<Location> getByType(Location.LocationType type);
 
     List<Location> getByStatus(Location.Status status);
+
+    List<Location> getLatestLocations();
 }

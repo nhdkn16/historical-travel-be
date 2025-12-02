@@ -1,15 +1,27 @@
 package com.nhdkn16.historicaltravel.controller;
 
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
-import ch.qos.logback.core.model.Model;
+import com.nhdkn16.historicaltravel.entity.Location;
+import com.nhdkn16.historicaltravel.service.LocationService;
+
+
 
 @Controller
-public class HomeApplicationController {
+public class HomeController {
+
+    @Autowired
+    private LocationService locationService;
     
     @GetMapping("/")
     public String getHomePage(Model model) {
+        List<Location> latestLocations = locationService.getLatestLocations();
+        model.addAttribute("locations", latestLocations);
         return "home";
     }
     

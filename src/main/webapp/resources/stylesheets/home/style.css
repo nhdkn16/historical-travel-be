@@ -114,22 +114,30 @@ body{
     display: block;
     z-index: 11111;
 }
-.item .name{
+.item .content .name{
     font-size: 40px;
     font-weight: bold;
     opacity: 0;
     animation:showcontent 1s ease-in-out 1 forwards
 }
-.item .des{
+.item .content .des{
     margin:20px 0;
     opacity: 0;
     animation:showcontent 1s ease-in-out 0.3s 1 forwards
 }
-.item a{
-    padding:10px 20px;
-    border:none;
-    opacity: 0;
-    animation:showcontent 1s ease-in-out 0.6s 1 forwards
+.item .content a{
+    background-color: #3498db;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+.item .content a:hover {
+    background-color: #2980b9;
+    transform: scale(1.05);
 }
 @keyframes showcontent{
     from{

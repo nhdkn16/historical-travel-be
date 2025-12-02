@@ -6,6 +6,7 @@ import java.util.Optional;
 import org.springframework.stereotype.Service;
 
 import com.nhdkn16.historicaltravel.entity.Location;
+import com.nhdkn16.historicaltravel.entity.Location.Status;
 import com.nhdkn16.historicaltravel.repository.LocationRepository;
 import com.nhdkn16.historicaltravel.service.LocationService;
 
@@ -77,5 +78,10 @@ public class LocationServiceImpl implements LocationService {
     @Override
     public List<Location> getByStatus(Location.Status status) {
         return locationRepository.findByStatus(status);
+    }
+
+    @Override
+    public List<Location> getLatestLocations() {
+        return locationRepository.findTop7ByStatusOrderByCreatedAtDesc(Location.Status.ACTIVE);
     }
 }
