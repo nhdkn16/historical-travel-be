@@ -21,41 +21,15 @@
         <jsp:include page="user/header/header.jsp" />
         <div class="container">
             <div id="slide">
-                <div class="item" style="background-image: url(/assets/images/vn_co_do_Hue.jpg);">
-                    <div class="content">
-                        <div class="name">Cố đô Huế</div>
-                        <div class="des">Cố đô Huế, đi dạo Kinh thành, cẩn thận kẻo lạc vào mộng mơ!</div>
-                        <a onclick="window.location.href='src/service/location/detail.html?id=hue'">See more</a>
+                <c:forEach var="loc" items="${locations}">
+                    <div class="item" style="background-image: url(${loc.mainImageUrl});">
+                        <div class="content">
+                            <div class="name">${loc.name}</div>
+                            <div class="des">${loc.description}</div>
+                            <a href="/location/detail/${loc.locationId}">See more</a>
+                        </div>
                     </div>
-                </div>
-                <div class="item" style="background-image: url(/assets/images/di_tich_my_son.jpg);">
-                    <div class="content">
-                        <div class="name">Di tích Mỹ Sơn (Quảng Nam)</div>
-                        <div class="des">Khám phá thánh địa Chăm Pa cổ kính, nơi các tháp gạch đỏ thắm kể chuyện xưa. Cẩn thận nhé, lạc vào mê cung lịch sử là mê luôn đấy!</div>
-                        <a onclick="window.location.href='src/service/location/detail.html?id=myson'">See more</a>
-                    </div>
-                </div>
-                <div class="item" style="background-image: url(/assets/images/pho_co_hoi_an.jpg);">
-                    <div class="content">
-                        <div class="name">Phố cổ Hội An (Quảng Nam)</div>
-                        <div class="des">Bước vào phố cổ, nơi thời gian như ngừng trôi với Chùa Cầu và nhà cổ. Chụp ảnh choẹt, ăn cao lầu, rồi ngẩn ngơ với vẻ đẹp cổ kính!</div>
-                        <a onclick="window.location.href='src/service/location/detail.html?id=hoian'">See more</a>
-                    </div>
-                </div>
-                <div class="item" style="background-image: url(/assets/images/thanh_co_qt.jpg);">
-                    <div class="content">
-                        <div class="name">Thành cổ Quảng Trị (Quảng Trị)</div>
-                        <div class="des">Nơi ghi dấu trận chiến 81 ngày đêm, đứng đây cảm giác như nghe tiếng vọng anh hùng. Tham quan đi, lịch sử sống động lắm đấy!</div>
-                        <a onclick="window.location.href='src/service/location/detail.html?id=quangtri'">See more</a>
-                    </div>
-                </div>
-                <div class="item" style="background-image: url(/assets/images/dia_dao_cu_chi.jpg);">
-                    <div class="content">
-                        <div class="name">Địa đạo Củ Chi (Bình Định)</div>
-                        <div class="des">Địa đạo Củ Chi, biểu tượng kháng chiến, nơi quân dân ta biến lòng đất thành pháo đài bất khuất.</div>
-                        <a onclick="window.location.href='src/service/location/detail.html?id=cuchi'">See more</a>
-                    </div>
-                </div>
+                </c:forEach>
             </div>
             <div class="buttons">
                 <button id="prev"><i class="fa-solid fa-angle-left"></i></button>

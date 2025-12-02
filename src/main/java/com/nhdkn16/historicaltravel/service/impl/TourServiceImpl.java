@@ -5,8 +5,10 @@ import org.springframework.stereotype.Service;
 
 import com.nhdkn16.historicaltravel.entity.Location;
 import com.nhdkn16.historicaltravel.entity.Tour;
+import com.nhdkn16.historicaltravel.entity.TourSchedule;
 import com.nhdkn16.historicaltravel.repository.LocationRepository;
 import com.nhdkn16.historicaltravel.repository.TourRepository;
+import com.nhdkn16.historicaltravel.repository.TourScheduleRepository;
 import com.nhdkn16.historicaltravel.service.TourService;
 
 import java.util.List;
@@ -17,6 +19,7 @@ import java.util.Optional;
 public class TourServiceImpl implements TourService {
 
     private final TourRepository tourRepository;
+    private final TourScheduleRepository scheduleRepository;
     private final LocationRepository locationRepository;
 
     @Override
@@ -67,5 +70,10 @@ public class TourServiceImpl implements TourService {
     @Override
     public List<Tour> getActiveTours() {
         return tourRepository.findByStatus(Tour.Status.ACTIVE);
+    }
+
+    @Override
+    public List<TourSchedule> getSchedulesByTour(Tour tour) {
+        return scheduleRepository.findByTourOrderByStartDateAsc(tour);
     }
 }

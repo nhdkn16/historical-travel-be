@@ -18,4 +18,6 @@ public interface TourScheduleRepository extends JpaRepository<TourSchedule, Long
     List<TourSchedule> findByTourAndStatus(Tour tour, Status status);
 
     List<TourSchedule> findByStartDateAfter(LocalDate date);
+
+    List<TourSchedule> findByTourOrderByStartDateAsc(Tour tour);
 }

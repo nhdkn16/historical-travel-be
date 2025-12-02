@@ -7,7 +7,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Chi tiết Tour - TravelVN</title>
+    <title>${location.name} - TravelVN</title>
     <link rel="stylesheet" href="/stylesheets/location/detail.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css">
 </head>
@@ -29,68 +29,61 @@
     </header>
 
     <!-- Hero Section -->
-    <div class="hero-section" id="heroSection">
+    <div class="hero-section" style="background-image: url(${location.mainImageUrl});">
         <div class="hero-overlay"></div>
         <div class="hero-content">
-            <span class="tour-badge" id="tourBadge">HOT</span>
-            <h1 id="tourTitle">Đang tải...</h1>
-            <p id="tourSubtitle" class="subtitle"></p>
+            <h1>${location.name}</h1>
+            <p class="subtitle">${location.province}</p>
             <div class="hero-meta">
-                <span><i class="fas fa-clock"></i> <span id="tourDuration">4 ngày 3 đêm</span></span>
-                <span><i class="fas fa-map-marker-alt"></i> <span id="tourLocation">Việt Nam</span></span>
+                <span><i class="fas fa-map-marker-alt"></i> ${location.address}</span>
+                <span><i class="fas fa-tag"></i> Loại: ${location.type}</span>
             </div>
         </div>
     </div>
 
     <!-- Main Content -->
     <div class="container">
-        <a href="/" class="back-button">
-            <i class="fas fa-arrow-left"></i> Quay lại trang chủ
-        </a>
+        <a href="/" class="back-button"><i class="fas fa-arrow-left"></i> Quay lại trang chủ</a>
 
         <div class="main-content">
             <!-- Left Content -->
             <div class="content-left">
-                <!-- Description -->
+                <!-- Location Description -->
                 <section class="section">
                     <h2 class="section-title"><i class="fas fa-info-circle"></i> Giới thiệu</h2>
-                    <div class="description" id="tourDescription">
-                        <p>Đang tải mô tả...</p>
+                    <div class="description">
+                        <p>${location.description}</p>
                     </div>
                 </section>
 
-                <!-- Highlights -->
-                <section class="section highlights">
-                    <h2 class="section-title"><i class="fas fa-star"></i> Điểm nổi bật</h2>
-                    <ul id="tourHighlights">
-                        <!-- Sẽ được thêm bởi JavaScript -->
-                    </ul>
-                </section>
-
-                <!-- Gallery -->
-                <section class="section gallery">
-                    <h2 class="section-title"><i class="fas fa-images"></i> Hình ảnh</h2>
-                    <div class="gallery-grid" id="galleryGrid">
-                        <!-- Sẽ được thêm bởi JavaScript -->
-                    </div>
-                </section>
-
-                <!-- Itinerary -->
-                <section class="section itinerary">
-                    <h2 class="section-title"><i class="fas fa-calendar-alt"></i> Lịch trình chi tiết</h2>
-                    <div id="itineraryContainer">
-                        <!-- Sẽ được thêm bởi JavaScript -->
-                    </div>
+                <!-- Tours List -->
+                <section class="section location-tours">
+                    <h2 class="section-title"><i class="fas fa-route"></i> Tour tại ${location.name}</h2>
+                    <c:if test="${not empty tours}">
+                        <ul class="tour-list">
+                            <c:forEach var="t" items="${tours}">
+                                <li>
+                                    <!-- href="/service/detail/${t.tourId}" -->
+                                    <a>${t.name}</a>
+                                    - Giá: ${t.pricePerPerson}đ
+                                    - Số lượng tối đa: ${t.maxParticipants} người
+                                    - Trạng thái: ${t.status}
+                                </li>
+                            </c:forEach>
+                        </ul>
+                    </c:if>
+                    <c:if test="${empty tours}">
+                        <p>Hiện chưa có tour nào cho địa điểm này.</p>
+                    </c:if>
                 </section>
 
                 <!-- Booking CTA -->
                 <section class="section booking-cta">
                     <div class="cta-content">
                         <h2>Sẵn sàng khám phá?</h2>
-                        <p>Đặt tour ngay hôm nay để nhận ưu đãi tốt nhất!</p>
-                        <button class="btn-book-large" id="btnBookLarge">
-                            <i class="fas fa-ticket-alt"></i>
-                            Đặt Tour Ngay
+                        <p>Chọn tour và đặt ngay hôm nay để nhận ưu đãi tốt nhất!</p>
+                        <button class="btn-book-large">
+                            <i class="fas fa-ticket-alt"></i> Đặt Tour Ngay
                         </button>
                     </div>
                 </section>
@@ -98,57 +91,47 @@
 
             <!-- Sidebar -->
             <aside class="sidebar">
-                <div class="booking-card">
-                    <div class="price-section">
-                        <div class="price-label">Giá chỉ từ</div>
-                        <div class="price" id="tourPrice">0đ</div>
-                        <div class="price-note">/ người</div>
-                    </div>
+                <c:choose>
+                    <c:when test="${not empty tours}">
+                        <c:set var="firstTour" value="${tours[0]}" />
+                        <div class="booking-card">
+                            <div class="price-section">
+                                <div class="price-label">Giá mỗi người</div>
+                                <div class="price">${firstTour.pricePerPerson}đ</div>
+                                <div class="price-note">/ người</div>
+                            </div>
 
-                    <div class="booking-info">
-                        <div class="info-item">
-                            <span class="info-label"><i class="fas fa-clock"></i> Thời gian</span>
-                            <span class="info-value" id="sidebarDuration">4N3Đ</span>
-                        </div>
-                        <div class="info-item">
-                            <span class="info-label"><i class="fas fa-plane"></i> Phương tiện</span>
-                            <span class="info-value">Máy bay + Xe</span>
-                        </div>
-                        <div class="info-item">
-                            <span class="info-label"><i class="fas fa-hotel"></i> Khách sạn</span>
-                            <span class="info-value">4 sao</span>
-                        </div>
-                        <div class="info-item">
-                            <span class="info-label"><i class="fas fa-check-circle"></i> Bao gồm</span>
-                            <span class="info-value">Vé + KS + Ăn</span>
-                        </div>
-                    </div>
+                            <div class="booking-info">
+                                <div class="info-item">
+                                    <span class="info-label"><i class="fas fa-users"></i> Số lượng tối đa</span>
+                                    <span class="info-value">${firstTour.maxParticipants}</span>
+                                </div>
+                                <div class="info-item">
+                                    <span class="info-label"><i class="fas fa-check-circle"></i> Trạng thái</span>
+                                    <span class="info-value">${firstTour.status}</span>
+                                </div>
+                            </div>
 
-                    <button class="btn-book" id="btnBook">
-                        <i class="fas fa-ticket-alt"></i>
-                        Đặt Ngay
-                    </button>
+                            <button class="btn-book">
+                                <i class="fas fa-ticket-alt"></i> Đặt Ngay
+                            </button>
 
-                    <div class="contact-info">
-                        <h4>Cần hỗ trợ?</h4>
-                        <div class="contact-item">
-                            <i class="fas fa-phone"></i>
-                            <span>0799-XXXX</span>
+                            <div class="contact-info">
+                                <h4>Cần hỗ trợ?</h4>
+                                <div class="contact-item"><i class="fas fa-phone"></i> 0799-XXXX</div>
+                                <div class="contact-item"><i class="fas fa-envelope"></i> hoangch.24itb@vku.udn.vn</div>
+                            </div>
                         </div>
-                        <div class="contact-item">
-                            <i class="fas fa-envelope"></i>
-                            <span>hoangch.24itb@vku.udn.vn</span>
+                    </c:when>
+                    <c:otherwise>
+                        <!-- Nếu không có tour nào -->
+                        <div class="booking-card">
+                            <p>Chưa có tour nào để đặt.</p>
                         </div>
-                    </div>
-                </div>
+                    </c:otherwise>
+                </c:choose>
             </aside>
         </div>
-    </div>
-
-    <!-- Lightbox -->
-    <div class="lightbox" id="lightbox" onclick="closeLightbox()">
-        <span class="lightbox-close">&times;</span>
-        <img class="lightbox-content" id="lightboxImg">
     </div>
 
     <script src="/scripts/location/detail.js"></script>
