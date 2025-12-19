@@ -1,0 +1,87 @@
+.header {
+    background: rgba(159, 158, 158, 0.1);
+    padding: 20px 0;
+    display: flex;
+    justify-content: center;
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 15px;
+    z-index: 100;
+    white-space: nowrap;
+    flex-wrap: nowrap;
+}
+
+.header.header-home {
+    background: rgba(255, 255, 255, 0.1);
+    box-shadow: none;
+}
+
+.header .containers {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 1000px;
+}
+
+.logo {
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.logo a {
+    text-decoration: none;
+    color: #48c3ca;
+}
+
+.nav ul {
+    list-style: none;
+    display: flex;
+    gap: 30px;
+    margin: 0;
+    padding: 0;
+}
+
+.nav li {
+    margin: 0;
+}
+
+.nav a {
+    text-decoration: none;
+    color: #48c3ca;
+    font-weight: 900;
+    transition: color 0.3s;
+}
+
+.nav a:hover {
+    color: #dcfa48;
+}
+
+.logout-btn {
+    border: none;
+    background: transparent;
+    cursor: pointer;
+    color: #ff4d4d;
+    font-weight: 500;
+    margin-left: 5px;
+}
+
+.logout-btn:hover {
+    text-decoration: underline;
+}
+
+.header .nav ul li form button {
+    background: none;
+    border: none;
+    color: #ff4d4f;
+    cursor: pointer;
+    font-size: 14px;
+    padding: 0;
+    margin-left: 5px;
+    text-decoration: underline;
+    font-family: inherit;
+}
+
+.header .nav ul li form button:hover {
+    color: #ff7875;
+}

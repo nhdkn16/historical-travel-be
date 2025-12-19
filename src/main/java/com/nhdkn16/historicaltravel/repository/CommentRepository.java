@@ -18,4 +18,14 @@ public interface CommentRepository extends JpaRepository<Comment, Long> {
     List<Comment> findByUser(User user);
 
     List<Comment> findByParentComment(Comment parentComment);
+
+    List<Comment> findByPost_PostIdOrderByCreatedAtAsc(Long postId);
+
+    List<Comment> findByLocation_LocationIdOrderByCreatedAtAsc(Long locationId);
+
+    List<Comment> findByParentComment_CommentId(Long parentCommentId);
+
+    List<Comment> findByUser_UserIdOrderByCreatedAtDesc(Long userId);
+
+    long count();
 }

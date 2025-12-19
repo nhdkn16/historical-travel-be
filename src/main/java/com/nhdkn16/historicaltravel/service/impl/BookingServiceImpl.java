@@ -3,6 +3,7 @@ package com.nhdkn16.historicaltravel.service.impl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import com.nhdkn16.historicaltravel.dto.request.BookingRequest;
 import com.nhdkn16.historicaltravel.entity.Booking;
 import com.nhdkn16.historicaltravel.entity.TourSchedule;
 import com.nhdkn16.historicaltravel.entity.User;
@@ -11,6 +12,7 @@ import com.nhdkn16.historicaltravel.repository.TourScheduleRepository;
 import com.nhdkn16.historicaltravel.repository.UserRepository;
 import com.nhdkn16.historicaltravel.service.BookingService;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Optional;
 
@@ -20,7 +22,7 @@ public class BookingServiceImpl implements BookingService {
 
     private final BookingRepository bookingRepository;
     private final UserRepository userRepository;
-    private final TourScheduleRepository scheduleRepository;
+    private final TourScheduleRepository scheduleRepository;    
 
     @Override
     public Booking createBooking(Booking booking) {
@@ -45,6 +47,41 @@ public class BookingServiceImpl implements BookingService {
 
         return bookingRepository.save(booking);
     }
+
+    @Override
+    public void createBooking(BookingRequest req) {
+        Booking booking = new Booking();
+
+        booking.setCustomerName(req.getCustomerName());
+        booking.setCustomerPhone(req.getCustomerPhone());
+        booking.setCustomerEmail(req.getCustomerEmail());
+        booking.setNotes(req.getNotes());
+        booking.setParticipantCount(req.getParticipantCount());
+
+        TourSchedule schedule = scheduleRepository.findById(req.getScheduleId())
+                .orElseThrow(() -> new RuntimeException("Schedule not found"));
+
+        booking.setTourSchedule(schedule);
+
+        if (req.getUserId() != null) {
+            User user = userRepository.findById(req.getUserId())
+                    .orElseThrow(() -> new RuntimeException("User not found"));
+            booking.setUser(user);
+        } else {
+            booking.setUser(null);
+        }
+
+        BigDecimal pricePerPerson = schedule.getTour().getPricePerPerson();
+        BigDecimal total = pricePerPerson.multiply(BigDecimal.valueOf(req.getParticipantCount()));
+        booking.setTotalPrice(total);
+
+        bookingRepository.save(booking);
+
+        int remain = schedule.getAvailableSlots() - req.getParticipantCount();
+        schedule.setAvailableSlots(Math.max(remain, 0));
+        scheduleRepository.save(schedule);
+    }
+
 
     @Override
     public Booking updateBooking(Long bookingId, Booking updatedBooking) {

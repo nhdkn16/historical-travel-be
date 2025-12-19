@@ -22,4 +22,8 @@ public interface PostService {
     List<Post> getPostsByLocation(Long locationId);
 
     Post increaseViewCount(Long postId);
+
+    List<Post> getAllPostsWithImages();
+
+    List<Post> getPostsByStatus(String status);
 }

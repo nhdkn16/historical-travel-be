@@ -7,17 +7,19 @@ import com.nhdkn16.historicaltravel.entity.User;
 
 public interface UserService {
 
-    User createUser(User user);
+    User create(User user);
 
-    User updateUser(Long id, User user);
+    User update(User user);
 
-    void deleteUser(Long id);
+    Optional<User> findById(Long id);
 
-    Optional<User> getUserById(Long id);
+    Optional<User> findByUsername(String username);
 
-    Optional<User> getUserByEmail(String email);
+    Optional<User> findByEmail(String email);
 
-    Optional<User> getUserByUsername(String username);
+    List<User> findAll();
 
-    List<User> getAllUsers();
+    void delete(Long id);
+
+    Optional<User> getLoggedInUser();
 }

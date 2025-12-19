@@ -67,4 +67,14 @@ public class TourScheduleServiceImpl implements TourScheduleService {
     public List<TourSchedule> getSchedulesAfterDate(LocalDate date) {
         return scheduleRepository.findByStartDateAfter(date);
     }
+
+    @Override
+    public Optional<TourSchedule> getDefaultSchedule(Long tourId) {
+        Tour tour = tourRepository.findById(tourId)
+                .orElseThrow(() -> new RuntimeException("Tour not found"));
+
+        return scheduleRepository.findTopByTourAndStatusOrderByStartDateAsc(
+                tour, TourSchedule.Status.AVAILABLE
+        );
+    }
 }

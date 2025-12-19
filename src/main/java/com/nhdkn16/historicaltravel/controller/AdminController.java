@@ -1,35 +1,47 @@
 package com.nhdkn16.historicaltravel.controller;
 
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
+import java.security.Principal;
 
-import ch.qos.logback.core.model.Model;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.nhdkn16.historicaltravel.dto.request.AdminDashboardStatsRequest;
+import com.nhdkn16.historicaltravel.service.AdminDashboardService;
+
+import lombok.RequiredArgsConstructor;
 
 @Controller
+@RequestMapping("/admin")
+@RequiredArgsConstructor
+@PreAuthorize("hasRole('ADMIN')")
 public class AdminController {
 
-    @GetMapping("/admin")
-    public String getAdminPage(Model model) {
+    private final AdminDashboardService dashboardService;
+
+    @GetMapping
+    public String dashboard(Model model, Principal principal) throws Exception{
+
+        String adminName = (principal != null) ? principal.getName() : "Admin";
+
+        model.addAttribute("adminName", adminName);
+
+        AdminDashboardStatsRequest stats = dashboardService.getDashboardStats();
+
+        ObjectMapper mapper = new ObjectMapper();
+
+        model.addAttribute("stats", stats);
+        model.addAttribute("chartLabelsJson", mapper.writeValueAsString(stats.getChartLabels()));
+        model.addAttribute("chartValuesJson", mapper.writeValueAsString(stats.getChartValues()));
+
         return "admin/admin";
     }
 
-    @GetMapping("/admin/comment")
+    @GetMapping("/comment")
     public String getAdminCommentPage(Model model) {
         return "admin/comments";
-    }
-
-    @GetMapping("/admin/location")
-    public String getAdminLocationPage(Model model) {
-        return "admin/locations";
-    }
-
-    @GetMapping("/admin/post")
-    public String getAdminPostPage(Model model) {
-        return "admin/posts";
-    }
-    
-    @GetMapping("/admin/user")
-    public String getAdminUserPage(Model model) {
-        return "admin/users";
     }
 }

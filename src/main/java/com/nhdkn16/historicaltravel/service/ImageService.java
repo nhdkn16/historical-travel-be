@@ -4,7 +4,6 @@ import java.util.List;
 import java.util.Optional;
 
 import com.nhdkn16.historicaltravel.entity.Image;
-import com.nhdkn16.historicaltravel.entity.Image.TargetType;
 
 public interface ImageService {
 
@@ -14,5 +13,7 @@ public interface ImageService {
 
     Optional<Image> getImageById(Long imageId);
 
-    List<Image> getImagesByTarget(TargetType targetType, Long targetId);
+    Image save(Image image);
+
+    List<Image> getImagesForTarget(String targetType, Long targetId);
 }

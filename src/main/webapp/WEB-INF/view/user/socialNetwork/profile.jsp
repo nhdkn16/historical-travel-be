@@ -11,6 +11,8 @@
     <link rel="stylesheet" href="/stylesheets/socialNetwork/profile.css">
 </head>
 <body>
+    <jsp:include page="/WEB-INF/view/user/header/main-header.jsp" />
+    
     <div class="container">
         <div class="header">
             <h1>✨ Profile Của Bạn</h1>

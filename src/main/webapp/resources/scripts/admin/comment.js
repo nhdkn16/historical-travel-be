@@ -1,7 +1,3 @@
-if (localStorage.getItem('isAdminLoggedIn') !== 'true') {
-    window.location.href = '/login';
-}
-
 let comments = [];
 
 function loadComments() {

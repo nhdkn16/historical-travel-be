@@ -11,6 +11,8 @@ import com.nhdkn16.historicaltravel.repository.PostRepository;
 import com.nhdkn16.historicaltravel.repository.UserRepository;
 import com.nhdkn16.historicaltravel.service.PostService;
 
+import org.springframework.transaction.annotation.Transactional;
+
 import java.util.List;
 import java.util.Optional;
 
@@ -80,5 +82,17 @@ public class PostServiceImpl implements PostService {
                     return postRepository.save(post);
                 })
                 .orElseThrow(() -> new RuntimeException("Post not found"));
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<Post> getAllPostsWithImages() {
+        return postRepository.findAllWithImages();
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<Post> getPostsByStatus(String status) {
+        return postRepository.findByStatus(status);
     }
 }

@@ -1,6 +1,7 @@
 package com.nhdkn16.historicaltravel.entity;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 import jakarta.persistence.*;
 import lombok.*;
@@ -51,6 +52,15 @@ public class Post {
     public void onUpdate() {
         updatedAt = LocalDateTime.now();
     }
+
+    @Transient
+    private List<Image> tempImages;
+
+    @Transient
+    private Long likeCount;
+
+    @OneToMany(mappedBy = "post", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<PostLike> likes;
 
     public enum Status {
         DRAFT, PUBLISHED, ARCHIVED

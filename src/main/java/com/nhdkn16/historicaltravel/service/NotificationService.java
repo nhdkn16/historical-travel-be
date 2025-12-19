@@ -7,13 +7,15 @@ import com.nhdkn16.historicaltravel.entity.Notification;
 
 public interface NotificationService {
 
-    Notification createNotification(Notification notification);
-
-    void markAsRead(Long notificationId);
-
-    Optional<Notification> getNotificationById(Long notificationId);
+    Notification markAsRead(Long notificationId);
 
     List<Notification> getNotificationsForUser(Long userId);
 
     List<Notification> getUnreadNotificationsForUser(Long userId);
+
+    Notification create(Notification notification);
+
+    long unreadCount(Long userId);
+
+    Optional<Notification> getById(Long id);
 }
