@@ -12,21 +12,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css">
 </head>
 <body>
-    <!-- Header -->
-    <header class="header">
-        <div class="container">
-            <div class="logo"><a href="/">🌍 TravelVN</a></div>
-            <nav class="nav">
-                <ul>
-                    <li><a href="/">Trang chủ</a></li>
-                    <li><a href="/social">Cộng đồng</a></li>
-                    <li><a href="/service">Dịch vụ</a></li>
-                    <li><a href="/contact">Liên hệ</a></li>
-                    <li><a href="/login">Đăng nhập</a></li>
-                </ul>
-            </nav>
-        </div>
-    </header>
+    <jsp:include page="/WEB-INF/view/user/header/main-header.jsp" />
 
     <!-- Hero Section -->
     <div class="hero-section" style="background-image: url(${location.mainImageUrl});">
@@ -67,7 +53,6 @@
                                     <a>${t.name}</a>
                                     - Giá: ${t.pricePerPerson}đ
                                     - Số lượng tối đa: ${t.maxParticipants} người
-                                    - Trạng thái: ${t.status}
                                 </li>
                             </c:forEach>
                         </ul>
@@ -124,7 +109,6 @@
                         </div>
                     </c:when>
                     <c:otherwise>
-                        <!-- Nếu không có tour nào -->
                         <div class="booking-card">
                             <p>Chưa có tour nào để đặt.</p>
                         </div>

@@ -8,6 +8,7 @@ import com.nhdkn16.historicaltravel.entity.TourSchedule.Status;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
 
 public interface TourScheduleRepository extends JpaRepository<TourSchedule, Long> {
 
@@ -20,4 +21,6 @@ public interface TourScheduleRepository extends JpaRepository<TourSchedule, Long
     List<TourSchedule> findByStartDateAfter(LocalDate date);
 
     List<TourSchedule> findByTourOrderByStartDateAsc(Tour tour);
+
+    Optional<TourSchedule> findTopByTourAndStatusOrderByStartDateAsc(Tour tour, Status status);
 }

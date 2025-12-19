@@ -1,6 +1,7 @@
 <%@page contentType="text/html" pageEncoding="UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -18,7 +19,7 @@
             <source src="/assets/videos/background.mp4" type="video/mp4">
             Trình duyệt của bạn không hỗ trợ video nền.
         </video>
-        <jsp:include page="user/header/header.jsp" />
+        <jsp:include page="user/header/main-header.jsp" />
         <div class="container">
             <div id="slide">
                 <c:forEach var="loc" items="${locations}">
@@ -26,7 +27,7 @@
                         <div class="content">
                             <div class="name">${loc.name}</div>
                             <div class="des">${loc.description}</div>
-                            <a href="/location/detail/${loc.locationId}">See more</a>
+                            <a class="seeMore" href="/location/detail/${loc.locationId}">See more</a>
                         </div>
                     </div>
                 </c:forEach>
@@ -39,5 +40,4 @@
 
         <script src="/scripts/script.js"></script>
     </body>
-    <script src="/scripts/auth/auth.js"></script>
 </html>

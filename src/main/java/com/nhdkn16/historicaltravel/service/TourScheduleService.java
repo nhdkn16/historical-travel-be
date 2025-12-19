@@ -21,4 +21,6 @@ public interface TourScheduleService {
     List<TourSchedule> getAvailableSchedules();
 
     List<TourSchedule> getSchedulesAfterDate(LocalDate date);
+
+    Optional<TourSchedule> getDefaultSchedule(Long tourId);
 }

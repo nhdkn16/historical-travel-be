@@ -3,51 +3,51 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="vi">
 <head>
-	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>Login</title>
-	<link rel="stylesheet" href="/stylesheets/register/login.css">
-	<link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <meta charset="UTF-8">
+    <title>Login</title>
+    <link rel="stylesheet" href="/stylesheets/register/login.css">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
 </head>
 <body>
-	<div class="background"></div>
-	<video autoplay muted loop id="bg-video">
-		<source src="/assets/videos/trongdong.mp4" type="video/mp4">
-		Trình duyệt của bạn không hỗ trợ video nền.
-	</video>
 
-	<div class="wrapper">
-		<form action="javascript:void(0)" onsubmit="handleLogin(); return false;">
-			<h1>Login</h1>
+<div class="background"></div>
+<video autoplay muted loop id="bg-video">
+    <source src="/assets/videos/trongdong.mp4" type="video/mp4">
+</video>
 
-			<div class="input-box">
-				<input type="text" id="username" placeholder="Username" required>
-				<i class='bx bxs-user'></i>
-			</div>
+<div class="wrapper">
+    <form action="/login" method="post">
+        <h1>Login</h1>
 
-			<div class="input-box">
-				<input type="password" id="password" placeholder="Password" required>
-				<i class='bx bxs-lock-alt'></i>
-			</div> 
+        <c:if test="${param.error != null}">
+            <p style="color:red;text-align:center">❌ Sai tài khoản hoặc mật khẩu</p>
+        </c:if>
 
-			<div class="remenber-forgot">
-				<label><input type="checkbox"> Remember me</label>
-				<a href="#">Forgot password</a>
-			</div>
-			
-			<button type="submit" class="btn">Login</button>
+        <c:if test="${param.logout != null}">
+            <p style="color:green;text-align:center">✅ Đã đăng xuất</p>
+        </c:if>
 
-			<div class="register-link">
-				<p>Don't have an account?
-					<a href="/register">Register</a>
-				</p>
-			</div>
-		</form>
-	</div>
+        <div class="input-box">
+            <i class='bx bxs-user'></i>
+            <input type="text" name="username" placeholder="Username" required>
+        </div>
 
-	<script src="/scripts/auth/auth.js"></script>
-	<script src="/scripts/register/login.js"></script>
+        <div class="input-box">
+            <i class='bx bxs-lock-alt'></i>
+            <input type="password" name="password" placeholder="Password" required>
+        </div>
+
+        <button type="submit" class="btn">Login</button>
+
+        <div class="register-link">
+            <p>Don't have an account?
+                <a href="/register">Register</a>
+            </p>
+        </div>
+    </form>
+</div>
+
 </body>
 </html>

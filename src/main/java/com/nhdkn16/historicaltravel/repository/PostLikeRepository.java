@@ -2,20 +2,17 @@ package com.nhdkn16.historicaltravel.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import com.nhdkn16.historicaltravel.entity.Post;
 import com.nhdkn16.historicaltravel.entity.PostLike;
-import com.nhdkn16.historicaltravel.entity.User;
 
-import java.util.List;
 import java.util.Optional;
 
 public interface PostLikeRepository extends JpaRepository<PostLike, Long> {
 
-    Optional<PostLike> findByUserAndPost(User user, Post post);
+    boolean existsByUser_UserIdAndPost_PostId(Long userId, Long postId);
 
-    boolean existsByUserAndPost(User user, Post post);
+    long countByPost_PostId(Long postId);
 
-    List<PostLike> findByPost(Post post);
+    Optional<PostLike> findByUser_UserIdAndPost_PostId(Long userId, Long postId);
 
-    void deleteByUserAndPost(User user, Post post);
+    void deleteByUser_UserIdAndPost_PostId(Long userId, Long postId);
 }

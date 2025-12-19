@@ -26,4 +26,6 @@ public interface LocationService {
     List<Location> getByStatus(Location.Status status);
 
     List<Location> getLatestLocations();
+
+    List<Location> search(String keyword);
 }

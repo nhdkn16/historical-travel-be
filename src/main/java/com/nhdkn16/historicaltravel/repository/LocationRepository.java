@@ -19,4 +19,11 @@ public interface LocationRepository extends JpaRepository<Location, Long> {
     List<Location> findByNameContainingIgnoreCase(String keyword);
 
     List<Location> findTop7ByStatusOrderByCreatedAtDesc(Location.Status status);
+
+    long count();
+
+    List<Location> findByNameContainingIgnoreCaseOrProvinceContainingIgnoreCase(
+        String name,
+        String province
+    );
 }

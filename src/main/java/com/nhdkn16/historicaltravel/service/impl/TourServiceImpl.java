@@ -1,6 +1,9 @@
 package com.nhdkn16.historicaltravel.service.impl;
 
 import lombok.RequiredArgsConstructor;
+
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.nhdkn16.historicaltravel.entity.Location;
@@ -56,7 +59,7 @@ public class TourServiceImpl implements TourService {
     }
 
     @Override
-    public List<Tour> getAllTours() {
+    public List<Tour> getAll() {
         return tourRepository.findAll();
     }
 
@@ -75,5 +78,20 @@ public class TourServiceImpl implements TourService {
     @Override
     public List<TourSchedule> getSchedulesByTour(Tour tour) {
         return scheduleRepository.findByTourOrderByStartDateAsc(tour);
+    }
+
+    @Override
+    public Page<Tour> getAllTours(Pageable pageable) {
+        return tourRepository.findAll(pageable);
+    }
+
+    @Override
+    public List<Tour> searchTours(String keyword) {
+        return tourRepository.searchTours(keyword);
+    }
+
+    @Override
+    public Page<Tour> searchToursPaged(String keyword, Pageable pageable) {
+        return tourRepository.findByNameContainingIgnoreCase(keyword, pageable);
     }
 }
