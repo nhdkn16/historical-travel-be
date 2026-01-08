@@ -1,0 +1,57 @@
+.cta {
+    position: relative;
+    background:
+        linear-gradient(rgba(0, 0, 0, 0.65), rgba(0, 0, 0, 0.65)),
+        url('/assets/images/cta.jpg') center / cover no-repeat;
+
+    padding: 120px 10%;
+    text-align: center;
+    color: #fff;
+}
+
+/* tiêu đề */
+.cta h2 {
+    font-size: 42px;
+    font-weight: 700;
+    line-height: 1.4;
+    max-width: 800px;
+    margin: 0 auto 40px;
+    text-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+}
+
+/* nút CTA */
+.cta-btn {
+    display: inline-block;
+    padding: 16px 48px;
+    font-size: 18px;
+    font-weight: 600;
+    color: #fff;
+    background: linear-gradient(135deg, #3498db, #1d6fa5);
+    border-radius: 999px;
+    text-decoration: none;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.35);
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+/* hover */
+.cta-btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 14px 30px rgba(0, 0, 0, 0.45);
+    background: linear-gradient(135deg, #3da2e3, #2380be);
+}
+
+.cta-btn::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    background: rgba(255, 255, 255, 0.15);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.cta-btn:hover::after {
+    opacity: 1;
+}

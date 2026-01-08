@@ -87,4 +87,12 @@ public class CommentServiceImpl implements CommentService {
                 .orElseThrow(() -> new RuntimeException("Parent comment not found"));
         return commentRepository.findByParentComment(parent);
     }
+
+    @Override
+    public List<Comment> findActiveCommentsByPostId(Long postId) {
+        return commentRepository.findByPost_PostIdAndStatusOrderByCreatedAtAsc(
+                postId,
+                Comment.Status.ACTIVE
+        );
+    }
 }

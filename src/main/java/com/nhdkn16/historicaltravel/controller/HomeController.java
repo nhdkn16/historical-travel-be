@@ -28,6 +28,9 @@ public class HomeController {
     public String getHomePage(Model model, Principal principal) {
         List<Location> latestLocations = locationService.getLatestLocations();
         model.addAttribute("locations", latestLocations);
+
+        List<Location> featuredLocations = locationService.getRandomLocations(8);
+        model.addAttribute("featuredLocations", featuredLocations);
         
         Optional<User> optionalUser = userService.getLoggedInUser();
         User loggedInUser = optionalUser.orElse(null);

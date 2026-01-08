@@ -1,5 +1,6 @@
 package com.nhdkn16.historicaltravel.controller;
 
+import com.nhdkn16.historicaltravel.dto.response.LikeResponse;
 import com.nhdkn16.historicaltravel.entity.*;
 import com.nhdkn16.historicaltravel.repository.*;
 import com.nhdkn16.historicaltravel.service.UserService;
@@ -70,8 +71,7 @@ public class SocialController {
             return "redirect:/login";
         }
 
-        User user = userService.findByUsername(principal.getName())
-                .orElseThrow(() -> new IllegalStateException("User not found"));
+        User user = userService.findByUsername(principal.getName()).orElseThrow(() -> new IllegalStateException("User not found"));
 
         Post post = new Post();
         post.setUser(user);
@@ -98,6 +98,45 @@ public class SocialController {
         }
 
         return "redirect:/social";
+    }
+
+    @PostMapping("/like")
+    @ResponseBody
+    public LikeResponse toggleLikeAjax(
+            @RequestParam Long postId,
+            Principal principal) {
+
+        if (principal == null) {
+            throw new RuntimeException("UNAUTHORIZED");
+        }
+
+        User user = userService.findByUsername(principal.getName())
+                .orElseThrow(() -> new IllegalStateException("User not found"));
+
+        Post post = postRepository.findById(postId)
+                .orElseThrow(() -> new IllegalStateException("Post not found"));
+
+        PostLike existingLike = postLikeRepository
+                .findByUser_UserIdAndPost_PostId(user.getUserId(), postId)
+                .orElse(null);
+
+        boolean liked;
+
+        if (existingLike != null) {
+            postLikeRepository.delete(existingLike);
+            liked = false;
+        } else {
+            PostLike like = new PostLike();
+            like.setUser(user);
+            like.setPost(post);
+            like.setCreatedAt(LocalDateTime.now());
+            postLikeRepository.save(like);
+            liked = true;
+        }
+
+        long likeCount = postLikeRepository.countByPost_PostId(postId);
+
+        return new LikeResponse(liked, likeCount);
     }
 
     @GetMapping("/like/{postId}")

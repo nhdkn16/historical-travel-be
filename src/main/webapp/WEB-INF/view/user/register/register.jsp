@@ -46,6 +46,9 @@
                 <p>Đã có tài khoản?
                     <a href="/login">Đăng nhập</a>
                 </p>
+                <p>
+                    <a href="/">Về Trang chủ</a>
+                </p>
             </div>
         </form:form>
     </div>

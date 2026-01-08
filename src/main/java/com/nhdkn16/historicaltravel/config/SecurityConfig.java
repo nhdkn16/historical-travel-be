@@ -29,12 +29,6 @@ public class SecurityConfig {
         http
             .csrf(csrf -> csrf.disable())
             .userDetailsService(userDetailsService)
-            
-            // .sessionManagement(session -> session
-            //     .sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED) 
-            //     .invalidSessionUrl("/login?expired")
-            //     .sessionFixation().none()
-            // )
 
             .sessionManagement(session -> session
                 .sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED) 
@@ -52,7 +46,9 @@ public class SecurityConfig {
                     "/stylesheets/**",
                     "/assets/**",
                     "/scripts/**",
-                    "/WEB-INF/**"
+                    "/WEB-INF/**",
+                    "/location",
+                    "/location/detail/**"
                 ).permitAll()
                 .requestMatchers("/admin/**").hasRole("ADMIN")
                 .anyRequest().authenticated()

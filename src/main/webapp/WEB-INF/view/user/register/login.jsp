@@ -42,8 +42,11 @@
         <button type="submit" class="btn">Login</button>
 
         <div class="register-link">
-            <p>Don't have an account?
-                <a href="/register">Register</a>
+            <p>Chưa có tài khoản?
+                <a href="/register">Đăng ký</a>
+            </p>
+            <p>
+                <a href="/">Về Trang chủ</a>
             </p>
         </div>
     </form>

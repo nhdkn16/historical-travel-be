@@ -5,11 +5,13 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.nhdkn16.historicaltravel.entity.Location;
 import com.nhdkn16.historicaltravel.entity.Tour;
@@ -30,6 +32,35 @@ public class LocationController {
 
     @Autowired
     private UserService userService;
+
+    @GetMapping
+    public String getLocationListPage(@RequestParam(defaultValue = "0") int page, @RequestParam(required = false) String keyword, Model model, Principal principal) {
+        int pageSize = 6;
+
+        Page<Location> locationPage;
+
+        if (keyword != null && !keyword.trim().isEmpty()) {
+            locationPage = locationService.searchLocations(keyword, page, pageSize);
+            model.addAttribute("keyword", keyword);
+        } else {
+            locationPage = locationService.getActiveLocations(page, pageSize);
+        }
+
+        model.addAttribute("locations", locationPage.getContent());
+        model.addAttribute("currentPage", page);
+        model.addAttribute("totalPages", locationPage.getTotalPages());
+
+        Optional<User> optionalUser = userService.getLoggedInUser();
+        model.addAttribute("loggedInUser", optionalUser.orElse(null));
+
+        if (principal != null) {
+            userService.findByUsername(principal.getName())
+                    .ifPresent(user -> model.addAttribute("user", user));
+        } else {
+            model.addAttribute("user", null);
+        }
+        return "user/location/location";
+    }
 
     @GetMapping("/detail/{id}")
     public String getDetailLocationPage(@PathVariable("id") Long id, Model model, Principal principal) {

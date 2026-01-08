@@ -14,29 +14,36 @@
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css">
     </head>
     <body>
-        <div class="background"></div>
-        <video autoplay muted loop id="bg-video">
-            <source src="/assets/videos/background.mp4" type="video/mp4">
-            Trình duyệt của bạn không hỗ trợ video nền.
-        </video>
         <jsp:include page="user/header/main-header.jsp" />
-        <div class="container">
-            <div id="slide">
-                <c:forEach var="loc" items="${locations}">
-                    <div class="item" style="background-image: url(${loc.mainImageUrl});">
-                        <div class="content">
-                            <div class="name">${loc.name}</div>
-                            <div class="des">${loc.description}</div>
-                            <a class="seeMore" href="/location/detail/${loc.locationId}">See more</a>
+        <section class="hero">
+            <video autoplay muted loop id="bg-video">
+                <source src="/assets/videos/background.mp4" type="video/mp4">
+                Trình duyệt của bạn không hỗ trợ video nền.
+            </video>
+            <div class="container">
+                <div class="background"></div>
+                <div id="slide">
+                    <c:forEach var="loc" items="${locations}">
+                        <div class="item" style="background-image: url(${loc.mainImageUrl});">
+                            <div class="content">
+                                <div class="name">${loc.name}</div>
+                                <div class="des">${loc.description}</div>
+                                <a class="seeMore" href="/location/detail/${loc.locationId}">See more</a>
+                            </div>
                         </div>
-                    </div>
-                </c:forEach>
+                    </c:forEach>
+                </div>
+                <div class="buttons">
+                    <button id="prev"><i class="fa-solid fa-angle-left"></i></button>
+                    <button id="next"><i class="fa-solid fa-angle-right"></i></button>
+                </div>
             </div>
-            <div class="buttons">
-                <button id="prev"><i class="fa-solid fa-angle-left"></i></button>
-                <button id="next"><i class="fa-solid fa-angle-right"></i></button>
-            </div>
-        </div>
+        </section>
+
+        <jsp:include page="user/home/intro.jsp"/>
+        <jsp:include page="user/home/featured.jsp"/>
+        <jsp:include page="user/home/why.jsp"/>
+        <jsp:include page="user/home/cta.jsp"/>
 
         <script src="/scripts/script.js"></script>
     </body>

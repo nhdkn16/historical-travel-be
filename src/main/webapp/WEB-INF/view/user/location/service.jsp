@@ -1,6 +1,7 @@
 <%@page contentType="text/html" pageEncoding="UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 
 <!DOCTYPE html>
 <html lang="vi">
@@ -34,7 +35,11 @@
                     <p class="price">💰 Giá từ: <span>${t.pricePerPerson}đ/người</span></p>
 
                     <button class="btn-detail"
-                        onclick="openBookingModal('${t.tourId}', '${t.defaultScheduleId}')">
+                        onclick="openBookingModal(
+                            '${t.tourId}',
+                            '${t.defaultScheduleId}',
+                            '${fn:escapeXml(t.name)}'
+                        )">
                         Đặt Vé
                     </button>
                 </div>
@@ -66,23 +71,23 @@
                 <span class="close" onclick="closeBookingModal()">&times;</span>
             </div>
 
-            <form:form method="post" modelAttribute="bookingRequest" action="/service/booking" id="bookingForm">
+            <form:form method="post" modelAttribute="bookingRequest" id="bookingForm">
                 <form:hidden path="tourId" id="modalTourId"/>
                 <form:hidden path="scheduleId" id="modalScheduleId"/>
 
                 <div class="form-group">
                     <label>Họ và Tên *</label>
-                    <form:input path="customerName" required="true"/>
+                    <form:input path="customerName" id="customerName" required="true"/>
                 </div>
 
                 <div class="form-group">
                     <label>SĐT *</label>
-                    <form:input path="customerPhone" required="true"/>
+                    <form:input path="customerPhone" id="customerPhone" required="true"/>
                 </div>
 
                 <div class="form-group">
                     <label>Email *</label>
-                    <form:input path="customerEmail" required="true"/>
+                    <form:input path="customerEmail" id="customerEmail" required="true"/>
                 </div>
 
                 <c:if test="${not empty schedulesForModal}">
@@ -115,7 +120,7 @@
 
                 <div class="form-group">
                     <label>Phương Thức Thanh Toán *</label>
-                    <form:select path="paymentMethod">
+                    <form:select path="paymentMethod" id="paymentMethod">
                         <form:option value="momo" label="MoMo"/>
                         <form:option value="zalopay" label="ZaloPay"/>
                         <form:option value="vnpay" label="VNPay"/>
@@ -126,6 +131,27 @@
 
                 <button type="submit" class="btn-submit">💳 Thanh Toán & Đặt Vé</button>
             </form:form>
+        </div>
+    </div>
+
+    <div id="paymentModal" class="modal">
+        <div class="modal-content">
+
+            <div id="paymentStep1">
+                <h3>⏳ Đang tạo mã QR...</h3>
+            </div>
+
+            <div id="paymentStep2" style="display:none;">
+                <h3>📱 Quét mã QR để thanh toán</h3>
+                <img id="qrCodeImage" />
+                <p>⏱️ Thời gian còn lại: <span id="countdown">05:00</span></p>
+            </div>
+
+            <div id="paymentStep3" style="display:none;">
+                <h3>🎉 Thanh toán thành công!</h3>
+                <div id="successMessage"></div>
+                <button onclick="finish()">Hoàn tất</button>
+            </div>
         </div>
     </div>
 

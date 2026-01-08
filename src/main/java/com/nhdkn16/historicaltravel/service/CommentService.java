@@ -22,4 +22,6 @@ public interface CommentService {
     List<Comment> getCommentsByUser(Long userId);
 
     List<Comment> getReplies(Long parentCommentId);
+
+    List<Comment> findActiveCommentsByPostId(Long postId);
 }

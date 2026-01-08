@@ -59,8 +59,14 @@ public class Post {
     @Transient
     private Long likeCount;
 
+    @Transient
+    private Long commentCount;
+
     @OneToMany(mappedBy = "post", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<PostLike> likes;
+
+    @OneToMany(mappedBy = "post", fetch = FetchType.LAZY)
+    private List<Comment> comments;
 
     public enum Status {
         DRAFT, PUBLISHED, ARCHIVED

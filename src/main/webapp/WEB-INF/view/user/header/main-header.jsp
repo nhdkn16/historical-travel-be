@@ -12,6 +12,7 @@
         <nav class="nav">
             <ul>
                 <li><a href="/">Trang chủ</a></li>
+                <li><a href="/location">Địa điểm</a></li>
                 <li><a href="/social">Cộng đồng</a></li>
                 <li><a href="/service">Dịch vụ</a></li>
                 <li><a href="/contact">Liên hệ</a></li>

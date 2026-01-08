@@ -3,6 +3,8 @@ package com.nhdkn16.historicaltravel.service;
 import java.util.List;
 import java.util.Optional;
 
+import org.springframework.data.domain.Page;
+
 import com.nhdkn16.historicaltravel.entity.Location;
 
 public interface LocationService {
@@ -28,4 +30,12 @@ public interface LocationService {
     List<Location> getLatestLocations();
 
     List<Location> search(String keyword);
+
+    List<Location> getRandomLocations(int limit);
+
+    List<Location> getAllActiveLocations();
+
+    Page<Location> getActiveLocations(int page, int size);
+
+    Page<Location> searchLocations(String keyword, int page, int size);
 }

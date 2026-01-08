@@ -6,7 +6,7 @@
 
         body {
             font-family: 'Poppins', sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: linear-gradient(135deg, #667eea 0%);
             min-height: 100vh;
             display: flex;
             align-items: center;
@@ -19,7 +19,7 @@
             width: 100%;
             background: white;
             border-radius: 20px;
-            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
             overflow: hidden;
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -27,7 +27,7 @@
 
         /* Left Side - Contact Info */
         .contact-info {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: linear-gradient(135deg, #667eea 0%);
             color: white;
             padding: 60px 40px;
             display: flex;
@@ -220,7 +220,9 @@
         }
 
         @keyframes spin {
-            to { transform: rotate(360deg); }
+            to {
+                transform: rotate(360deg);
+            }
         }
 
         /* Button Group - Để 2 nút nằm cạnh nhau hoặc dọc đẹp */
@@ -252,7 +254,7 @@
         .btn-submit:hover:not(:disabled) {
             transform: translateY(-2px);
             box-shadow: 0 10px 30px rgba(102, 126, 234, 0.4);
-        }   
+        }
 
         .btn-submit:disabled {
             opacity: 0.7;
@@ -304,13 +306,13 @@
             .button-group {
                 flex-direction: row;
             }
-    
+
             .btn-submit,
             .btn-back {
                 width: auto;
                 flex: 1;
             }
-        }   
+        }
 
         /* Alert Messages */
         .alert {
@@ -329,6 +331,7 @@
                 opacity: 0;
                 transform: translateY(-10px);
             }
+
             to {
                 opacity: 1;
                 transform: translateY(0);
@@ -355,7 +358,7 @@
             font-size: 20px;
         }
 
-        
+
 
         /* Responsive */
         @media (max-width: 992px) {

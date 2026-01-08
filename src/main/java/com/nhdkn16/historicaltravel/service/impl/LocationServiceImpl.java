@@ -1,8 +1,13 @@
 package com.nhdkn16.historicaltravel.service.impl;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import com.nhdkn16.historicaltravel.entity.Location;
@@ -87,5 +92,32 @@ public class LocationServiceImpl implements LocationService {
     @Override
     public List<Location> search(String keyword) {
         return locationRepository.findByNameContainingIgnoreCaseOrProvinceContainingIgnoreCase(keyword, keyword);
+    }
+
+    @Override
+    public List<Location> getRandomLocations(int limit) {
+        List<Location> allLocations = locationRepository.findAll();
+        Collections.shuffle(allLocations);
+
+        return allLocations.stream()
+                .limit(limit)
+                .toList();
+    }
+
+    @Override
+    public List<Location> getAllActiveLocations() {
+        return locationRepository.findByStatus(Location.Status.ACTIVE);
+    }
+
+    @Override
+    public Page<Location> getActiveLocations(int page, int size) {
+        Pageable pageable = PageRequest.of(page, size, Sort.by("createdAt").descending());
+        return locationRepository.findByStatus(Location.Status.ACTIVE, pageable);
+    }
+
+    @Override
+    public Page<Location> searchLocations(String keyword, int page, int size) {
+        Pageable pageable = PageRequest.of(page, size);
+        return locationRepository.searchActiveLocations(keyword, pageable);
     }
 }

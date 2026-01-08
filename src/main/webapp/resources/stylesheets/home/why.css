@@ -1,0 +1,60 @@
+.why {
+    background: #fff;
+    padding: 80px 10%;
+    display: flex;
+    justify-content: space-around;
+    text-align: center;
+}
+
+.highlight {
+    font-size: 40px;
+    margin: auto 0;
+    text-align: left;
+    line-height: 3.4rem;
+}
+
+.why-info {
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    gap: 5px;
+    font-size: 20px;
+    margin-left: 3rem;
+}
+
+.why-item {
+    position: relative;
+    font-size: 18px;
+    padding: 20px;
+    transition: all 0.3s ease;
+    border-radius: 1rem;
+    min-width: 17rem;
+    text-align: left;
+}
+
+.why-info:hover .why-item {
+    opacity: 0.35;
+}
+
+.why-info:hover .why-item:hover {
+    opacity: 1;
+    transform: translateX(6px);
+    font-weight: 600;
+    background-color: #ece7e7;
+    cursor: pointer;
+}
+
+.why-item::before {
+    content: "➜";
+    position: absolute;
+    left: -20px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #aaa;
+    transition: all 0.3s ease;
+}
+
+.why-item:hover::before {
+    transform: translate(5px, -50%);
+    color: #000;
+}
